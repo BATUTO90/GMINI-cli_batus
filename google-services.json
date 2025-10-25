@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "116878560191",
+    "project_id": "gemini-cli-batus",
+    "storage_bucket": "gemini-cli-batus.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:116878560191:android:fb092a84c5c8cab4d3ef0a",
+        "android_client_info": {
+          "package_name": "com.company.appname"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkNd8aRMIF1nMkoZrCjjPD5qCjAmmjyVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
