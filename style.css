@@ -1,3 +1,86 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;500;600;700&display=swap');
 
-/* Todo tu CSS aquí */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.terminal-input {
+    font-family: 'Fira Code', monospace;
+    caret-color: #4ADE80;
+}
+
+.terminal-output {
+    font-family: 'Fira Code', monospace;
+    height: 300px;
+    overflow-y: auto;
+    padding-right: 1rem;
+}
+
+/* Scrollbar styling */
+.terminal-output::-webkit-scrollbar {
+    width: 6px;
+}
+
+.terminal-output::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.agent-card {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.agent-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Custom styles for the terminal */
+.command-line {
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.terminal-input {
+    border: none;
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.terminal-input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Vanta.js container fix */
+#vanta-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
