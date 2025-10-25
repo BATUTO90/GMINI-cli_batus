@@ -1,0 +1,8 @@
+gemini-ai-terminal/
+├── index.html
+├── style.css
+├── script.js
+├── README.md
+└── components/
+    ├── navbar.js
+    └── footer.js
