@@ -1,134 +1,57 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const terminalInput = document.getElementById('terminal-input');
-    const terminalOutput = document.querySelector('.terminal-output');
 
-    // Sample commands and responses
-    const commands = {
-        'help': 'Available commands: help, clear, dev [prompt], debug [code], solve [problem], about, date',
-        'clear': () => {
-            terminalOutput.innerHTML = '';
-            return '';
-        },
-        'dev': (prompt) => `DEV AGENT: Analyzing "${prompt}"...\n> Generating optimized code solution...\n> Code generation complete!`,
-        'debug': (code) => `DEBUG AGENT: Scanning code for errors...\n> Found 3 potential issues\n> Suggested fixes generated`,
-        'solve': (problem) => `SOLUTION AGENT: Finding solution for "${problem}"...\n> Analyzing problem space...\n> Optimal solution identified!`,
-        'about': 'Gemini AI Terminal v1.0 - Interactive AI-powered command interface',
-        'date': () => `Current date: ${new Date().toLocaleString()}`,
-        'echo': (text) => text,
-        'status': 'System Status: All agents online\nNetwork: Stable\nAPI: Connected'
-    };
+class CustomNavbar extends HTMLElement {
+    connectedCallback() {
+        this.innerHTML = `
+            <nav class="fixed top-0 left-0 right-0 bg-gray-800 bg-opacity-50 backdrop-blur-sm shadow-md z-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex items-center justify-between h-16">
+                        <div class="flex items-center">
+                            <span class="text-white font-bold text-xl">Gemini AI</span>
+                        </div>
+                        <div class="hidden md:block">
+                            <div class="ml-10 flex items-baseline space-x-4">
+                                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Agents</a>
+                                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Pricing</a>
+                                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
+                            </div>
+                        </div>
+                        <div class="-mr-2 flex md:hidden">
+                            <button id="mobile-menu-button" type="button" class="bg-gray-700 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                <span class="sr-only">Open main menu</span>
+                                <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                </svg>
+                                <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-    // Command history
-    let commandHistory = [];
-    let historyIndex = -1;
+                <div class="md:hidden hidden" id="mobile-menu">
+                    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Agents</a>
+                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Pricing</a>
+                        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
+                    </div>
+                </div>
+            </nav>
+        `;
 
-    terminalInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-            const inputText = terminalInput.value.trim();
-            terminalInput.value = '';
-            historyIndex = -1;
+        const mobileMenuButton = this.querySelector('#mobile-menu-button');
+        const mobileMenu = this.querySelector('#mobile-menu');
+        const openIcon = mobileMenuButton.querySelectorAll('svg')[0];
+        const closeIcon = mobileMenuButton.querySelectorAll('svg')[1];
 
-            if (inputText) {
-                // Add to command history
-                commandHistory.push(inputText);
-                if (commandHistory.length > 50) commandHistory.shift();
-
-                // Add user input to terminal
-                addTerminalLine(inputText, 'user');
-
-                // Process command
-                const response = processCommand(inputText);
-
-                if (response) {
-                    addTerminalLine(response, 'system');
-                }
-
-                // Scroll to bottom
-                terminalOutput.scrollTop = terminalOutput.scrollHeight;
-            }
-        } else if (e.key === 'ArrowUp') {
-            e.preventDefault();
-            if (commandHistory.length > 0) {
-                if (historyIndex < commandHistory.length - 1) {
-                    historyIndex++;
-                }
-                terminalInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
-            }
-        } else if (e.key === 'ArrowDown') {
-            e.preventDefault();
-            if (historyIndex > 0) {
-                historyIndex--;
-                terminalInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
-            } else {
-                historyIndex = -1;
-                terminalInput.value = '';
-            }
-        } else if (e.key === 'Tab') {
-            e.preventDefault();
-            const inputText = terminalInput.value.trim();
-            const matches = Object.keys(commands).filter(cmd => 
-                cmd.startsWith(inputText.split(' ')[0])
-            );
-            if (matches.length === 1) {
-                terminalInput.value = matches[0] + ' ';
-            }
-        }
-    });
-
-    function processCommand(input) {
-        const [command, ...args] = input.split(' ');
-        const argsText = args.join(' ');
-        
-        if (commands[command.toLowerCase()]) {
-            if (typeof commands[command.toLowerCase()] === 'function') {
-                return commands[command.toLowerCase()](argsText);
-            }
-            return commands[command.toLowerCase()];
-        }
-        
-        return `Command not found: ${command}. Type 'help' for available commands.`;
-    }
-
-    function addTerminalLine(text, type = 'system') {
-        const lineElement = document.createElement('div');
-        lineElement.className = `command-line ${type === 'user' ? 'text-gray-300' : 'text-white'}`;
-        
-        if (type === 'system') {
-            // Preserve line breaks in system responses
-            lineElement.innerHTML = text.split('\n').map(line => 
-                line ? `> ${line}` : '<br>'
-            ).join('\n');
-        } else {
-            lineElement.textContent = text;
-        }
-        
-        terminalOutput.appendChild(lineElement);
-    }
-
-    // Focus on terminal input
-    terminalInput.focus();
-
-    // Add click handlers for agent cards
-    document.querySelectorAll('.agent-card').forEach(card => {
-        card.addEventListener('click', () => {
-            const agentName = card.querySelector('h3').textContent;
-            let command = '';
-            
-            switch(agentName) {
-                case 'Dev Agent':
-                    command = 'dev [your code request]';
-                    break;
-                case 'Debug Agent':
-                    command = 'debug [your code]';
-                    break;
-                case 'Solution Agent':
-                    command = 'solve [your problem]';
-                    break;
-            }
-            
-            terminalInput.value = command;
-            terminalInput.focus();
-            terminalInput.setSelectionRange(5, command.length - 1);
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            openIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
         });
-    });
-});
+    }
+}
+
+customElements.define('custom-navbar', CustomNavbar);
