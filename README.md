@@ -1,22 +1,27 @@
 # Gemini AI Terminal
 
-Una interfaz de terminal interactiva con agentes de IA.
+Una interfaz de terminal interactiva con agentes de IA especializados.
 
-## Características
+## 🚀 Características
 
-- Interfaz de terminal estilo hacker
-- Agentes especializados (Dev, Debug, Solution)
-- Fondo animado con Vanta.js
-- Diseño responsive
+- Interfaz de terminal estilo hacker con efectos visuales
+- Agentes especializados (Desarrollo, Debugging, Soluciones)
+- Fondo animado 3D con Vanta.js
+- Diseño completamente responsive
+- Historial de comandos
+- Autocompletado con Tab
+- Componentes web personalizados
 
-## Uso
+## 🛠️ Comandos Disponibles
 
-Abre `index.html` en tu navegador o visita [enlace de GitHub Pages].
-
-## Comandos disponibles
-
-- `help` - Muestra comandos disponibles
+- `help` - Muestra todos los comandos disponibles
 - `clear` - Limpia la terminal
 - `dev [prompt]` - Usa el agente de desarrollo
 - `debug [code]` - Usa el agente de debugging
 - `solve [problem]` - Usa el agente de soluciones
+- `about` - Información del sistema
+- `date` - Muestra la fecha y hora actual
+- `echo [text]` - Repite el texto
+- `status` - Estado del sistema
+
+## 📁 Estructura del Proyecto
