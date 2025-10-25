@@ -10,15 +10,79 @@
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
     <style>
-        .terminal-input:focus { outline: none; }
-        .command-line::before { content: "> "; color: #4ADE80; font-weight: bold; }
+        .terminal-input:focus {
+            outline: none;
+        }
+        .command-line::before {
+            content: "> ";
+            color: #4ADE80;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 min-h-screen">
     <div id="vanta-bg" class="fixed inset-0 z-0"></div>
-    <div class="relative z-10 max-w-4xl mx-auto p-6">
-        <!-- El resto de tu HTML aquí -->
+    
+    <custom-navbar></custom-navbar>
+    
+    <div class="relative z-10 max-w-4xl mx-auto p-6 pt-24">
+        <header class="flex items-center justify-between mb-8">
+            <div class="flex items-center space-x-2">
+                <i data-feather="cpu" class="text-green-400"></i>
+                <h1 class="text-2xl font-bold">Gemini AI Terminal</h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button class="px-3 py-1 bg-gray-700 rounded-md hover:bg-gray-600 transition">
+                    <i data-feather="settings"></i>
+                </button>
+                <button class="px-3 py-1 bg-gray-700 rounded-md hover:bg-gray-600 transition">
+                    <i data-feather="info"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="bg-gray-800 bg-opacity-70 backdrop-blur-sm rounded-xl p-6 shadow-2xl">
+            <div class="terminal-output space-y-4 mb-6">
+                <div class="command-line text-green-400">Welcome to Gemini AI Terminal</div>
+                <div class="command-line text-green-400">Type 'help' to see available commands</div>
+            </div>
+
+            <div class="flex items-center">
+                <span class="text-green-400 mr-2">user@gemini:~$</span>
+                <input type="text" id="terminal-input" class="terminal-input bg-transparent flex-1 text-white" placeholder="Enter command...">
+            </div>
+
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="agent-card bg-gray-700 bg-opacity-50 p-4 rounded-lg hover:bg-opacity-70 transition">
+                    <div class="flex items-center mb-2">
+                        <i data-feather="code" class="text-blue-400 mr-2"></i>
+                        <h3 class="font-bold">Dev Agent</h3>
+                    </div>
+                    <p class="text-sm text-gray-300">Generate, analyze and optimize code</p>
+                </div>
+                <div class="agent-card bg-gray-700 bg-opacity-50 p-4 rounded-lg hover:bg-opacity-70 transition">
+                    <div class="flex items-center mb-2">
+                        <i data-feather="shield" class="text-yellow-400 mr-2"></i>
+                        <h3 class="font-bold">Debug Agent</h3>
+                    </div>
+                    <p class="text-sm text-gray-300">Find and fix errors in your code</p>
+                </div>
+                <div class="agent-card bg-gray-700 bg-opacity-50 p-4 rounded-lg hover:bg-opacity-70 transition">
+                    <div class="flex items-center mb-2">
+                        <i data-feather="zap" class="text-purple-400 mr-2"></i>
+                        <h3 class="font-bold">Solution Agent</h3>
+                    </div>
+                    <p class="text-sm text-gray-300">Provide efficient solutions to problems</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="mt-8 text-center text-gray-400 text-sm">
+            <p>Press <span class="font-mono bg-gray-700 px-2 py-1 rounded">Tab</span> for autocomplete</p>
+        </footer>
     </div>
+
+    <custom-footer></custom-footer>
 
     <script src="components/navbar.js"></script>
     <script src="components/footer.js"></script>
